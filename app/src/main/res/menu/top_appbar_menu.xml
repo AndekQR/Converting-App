@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+            android:id="@+id/toXmlToJson"
+            android:icon="@drawable/ic_xml"
+            android:title="@string/xml_to_json"
+            app:showAsAction="ifRoom"
+    />
+    <item
+            android:id="@+id/toAudioConverter"
+            android:icon="@drawable/ic_speaker"
+            android:title="@string/audioConverter"
+            app:showAsAction="ifRoom"
+    />
+</menu>

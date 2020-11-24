@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_margin="8dp"
+        app:cardBackgroundColor="@color/cardsColor"
+        android:id="@+id/chooseFileCardView"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+    >
+        <TextView
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="130sp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:id="@+id/fileNameTextView"
+                android:textSize="15sp"
+                android:text="file name"/>
+
+        <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detailsButton"
+                app:layout_constraintLeft_toRightOf="@id/fileNameTextView"
+                app:layout_constraintRight_toLeftOf="@id/saveAsJsonButton"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="20dp"
+                android:textSize="10sp"
+                android:maxLines="1"
+                android:text="@string/details"/>
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/saveAsJsonButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/detailsButton"
+                android:layout_marginStart="5dp"
+                android:textSize="10sp"
+                android:text="@string/save_as_json"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
+

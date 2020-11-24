@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/audio_conv_nav_graph"
+            app:startDestination="@id/audioConverterHomeFragment">
+
+    <fragment android:id="@+id/audioConverterHomeFragment"
+              android:name="com.example.convertingapp.ui.audioConverter.homeFragment.AudioConverterHomeFragment"
+              android:label="Audio converter" tools:layout="@layout/fragment_audio_converter_home"/>
+</navigation>

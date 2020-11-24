@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">ConvertingApp</string>
+    <string name="xml_to_json">XML to JSON</string>
+    <string name="audioConverter">Audio Converter</string>
+    <string name="converting_app">Converting App</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nav_header_title">Menu</string>
+    <string name="choose_file_or_folder">Choose file or folder…</string>
+    <string name="choose_file">Choose file</string>
+    <string name="choose_folder">Choose folder</string>
+    <string name="details">Details</string>
+    <string name="save_as_json">Save as JSON</string>
+    <string name="save_all_json">Save all as JSON</string>
+    <string name="loaded_files">Loaded files</string>
+    <string name="output_file_format">Output file format</string>
+    <string name="convert">Convert</string>
+</resources>
