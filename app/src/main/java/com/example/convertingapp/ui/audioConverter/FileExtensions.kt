@@ -1,8 +1,8 @@
 package com.example.convertingapp.ui.audioConverter
 
-import java.io.File
+import com.example.convertingapp.data.filesHelper.AudioFile
 
-fun File.isAudioFile():Boolean {
+fun AudioFile.isAudioFile():Boolean {
     val fileExtension = this.name.substringAfterLast('.')
     if (AudioConverterViewModel.supportedFormats.contains(fileExtension)) return true
     return false

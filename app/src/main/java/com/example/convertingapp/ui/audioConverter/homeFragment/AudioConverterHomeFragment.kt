@@ -20,11 +20,15 @@ import cafe.adriel.androidaudioconverter.AndroidAudioConverter
 import cafe.adriel.androidaudioconverter.callback.IConvertCallback
 import cafe.adriel.androidaudioconverter.model.AudioFormat
 import com.example.convertingapp.R
+import com.example.convertingapp.data.filesHelper.AudioFile
 import com.example.convertingapp.ui.audioConverter.AudioConverterViewModel
+import com.example.convertingapp.ui.audioConverter.ConversionStatus
 import com.example.convertingapp.ui.audioConverter.isAudioFile
+import com.example.convertingapp.ui.xmlToJson.alert.AlertDialogFragment
 import com.google.android.material.checkbox.MaterialCheckBox
 import kotlinx.android.synthetic.main.fragment_audio_converter_home.*
 import java.io.File
+import java.util.stream.Collectors
 
 class AudioConverterHomeFragment : Fragment() {
 
@@ -67,39 +71,63 @@ class AudioConverterHomeFragment : Fragment() {
     }
 
     private fun convertFiles() {
-        this.outputFormatCheckboxes.forEach { checkbox ->
+        val checkedCheckboxes = this.outputFormatCheckboxes.stream().filter { it.isChecked }.collect(Collectors.toList())
+        checkedCheckboxes.forEach { checkbox ->
             this.viewModel.audioFilesList.forEach { file ->
                 when (checkbox.id) {
-                    R.id.checkbox_aac -> convert(file, AudioFormat.AAC)
-                    R.id.checkbox_mp3 -> convert(file, AudioFormat.MP3)
-                    R.id.checkbox_m4a -> convert(file, AudioFormat.M4A)
-                    R.id.checkbox_wma -> convert(file, AudioFormat.WMA)
-                    R.id.checkbox_wav -> convert(file, AudioFormat.WAV)
-                    R.id.checkbox_flac -> convert(file, AudioFormat.FLAC)
+                    R.id.checkbox_aac -> {
+                        convert(file, AudioFormat.AAC)
+                    }
+                    R.id.checkbox_mp3 -> {
+                        convert(file, AudioFormat.MP3)
+                    }
+                    R.id.checkbox_m4a -> {
+                        convert(file, AudioFormat.M4A)
+                    }
+                    R.id.checkbox_wma -> {
+                        convert(file, AudioFormat.WMA)
+                    }
+                    R.id.checkbox_wav -> {
+                        convert(file, AudioFormat.WAV)
+                    }
+                    R.id.checkbox_flac -> {
+                        convert(file, AudioFormat.FLAC)
+                    }
                 }
             }
         }
     }
 
-    private fun convert(file: File, format: AudioFormat) {
+    private fun convert(file: AudioFile, format: AudioFormat) {
         //nie konwertujemy pliku do tego samego formatu
         if (file.extension != format.name) {
+            this.viewModel.convertedFile = file
+            this.viewModel.changeAudioFileStatus(file, ConversionStatus.IN_PROGRESS)
+            this.adapter.notifyDataSetChanged()
             AndroidAudioConverter.with(requireContext())
                 .setFile(file)
                 .setFormat(format)
                 .setCallback(fileConvertCallback)
                 .convert()
+            return
         }
+        this.viewModel.convertedFile = null
         fileConvertCallback.onSuccess(file)
     }
 
     private val fileConvertCallback = object : IConvertCallback {
         override fun onSuccess(convertedFile: File?) {
-            TODO("Not yet implemented")
+            convertedFile?.let {
+                viewModel.changeAudioFileStatus(it, ConversionStatus.DONE)
+                adapter.notifyDataSetChanged()
+            }
         }
 
         override fun onFailure(error: Exception?) {
-            TODO("Not yet implemented")
+            viewModel.convertedFile?.let {
+                viewModel.changeAudioFileStatus(File(it.absolutePath), ConversionStatus.ERROR)
+                adapter.notifyDataSetChanged()
+            }
         }
 
     }

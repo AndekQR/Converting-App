@@ -7,4 +7,7 @@ import kotlinx.android.synthetic.main.audio_file_item.view.*
 class AudioFileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     var audioFileTextView = itemView.textViewItem
+    var statusLayout = itemView.statusLayout
+    var progressbar = itemView.progressBar
+    var imageView = itemView.imageView
 }
