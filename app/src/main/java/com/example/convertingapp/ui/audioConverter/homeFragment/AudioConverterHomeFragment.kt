@@ -99,8 +99,8 @@ class AudioConverterHomeFragment : Fragment() {
     }
 
     private fun convert(file: AudioFile, format: AudioFormat) {
-        //nie konwertujemy pliku do tego samego formatu
-        if (file.extension != format.name) {
+        //nie konwertujemy pliku do tego samego formatu i tego co już jest konwertowany
+        if (file.extension != format.name || file.conversionStatus != ConversionStatus.IN_PROGRESS) {
             this.viewModel.convertedFile = file
             this.viewModel.changeAudioFileStatus(file, ConversionStatus.IN_PROGRESS)
             this.adapter.notifyDataSetChanged()
