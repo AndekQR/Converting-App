@@ -1,17 +1,22 @@
 package com.example.convertingapp.ui.xmlToJson.fileList
 
-import android.content.Context
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.convertingapp.R
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_files_list.*
 import java.io.File
 
 class FileListAdapter(
-    val fileList: List<File>,
-    val context: Context,
+    val fileList: MutableList<File>,
+    val activity: Activity,
     private val clickListener: ClickListener
 ) : RecyclerView.Adapter<FileViewHolder>() {
+
+    private var recentlyDeletedFile: File? = null
+    private var recentlyDeletedFilePosition: Int? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileViewHolder {
         val context = parent.context
@@ -32,5 +37,28 @@ class FileListAdapter(
 
     override fun getItemCount(): Int = this.fileList.size
 
+    fun deleteFile(position: Int) {
+        this.recentlyDeletedFile = this.fileList[position]
+        this.recentlyDeletedFilePosition = position
+        this.fileList.removeAt(position)
+        notifyItemRemoved(position)
+        showUndoSnackbar()
+    }
 
+    private fun showUndoSnackbar() {
+        val view = activity.fileListLayoutRoot
+        val snackbar = Snackbar.make(view, "Undo delete", Snackbar.LENGTH_LONG)
+        snackbar.setAction("Undo") {
+            undoDelete()
+        }.show()
+    }
+
+    private fun undoDelete() {
+        recentlyDeletedFilePosition?.let {
+            recentlyDeletedFile?.let { it1 ->
+                this.fileList.add(it, it1)
+                notifyItemInserted(it)
+            }
+        }
+    }
 }

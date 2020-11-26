@@ -15,6 +15,7 @@ import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.convertingapp.R
 import com.example.convertingapp.data.filesHelper.FileWriter
@@ -42,9 +43,11 @@ class FilesListFragment : Fragment(), ClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        this.adapter = FileListAdapter(this.viewModel.xmlFileList, requireContext(), this)
+        this.adapter = FileListAdapter(this.viewModel.xmlFileList, requireActivity(), this)
         filesRecyclerView.adapter = this.adapter
         filesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(this.adapter))
+        itemTouchHelper.attachToRecyclerView(filesRecyclerView)
 
         chooseFileButton.setOnClickListener {
             openChooser(true)
